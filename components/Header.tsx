@@ -3,8 +3,21 @@ import { MdFastfood } from 'react-icons/md';
 import { RiSearchLine } from 'react-icons/ri';
 import { AiOutlineFileAdd } from 'react-icons/ai';
 import { BsBookmarkStar } from 'react-icons/bs';
+import { useState } from 'react';
 
-function Header() {
+enum AppStatus {
+  start,
+  search,
+  results,
+}
+
+function Header({ setFetchUrl, data, error, setStatus }) {
+  const [inputData, setInputData] = useState('');
+  function clickSearchHandle(e) {
+    e.preventDefault();
+    setFetchUrl(`https://forkify-api.herokuapp.com/api/search?q=${inputData}`);
+    setStatus(AppStatus.search);
+  }
   return (
     <>
       <div className="flex justify-between bg-[#F8EDEB] p-4 rounded-t-md">
@@ -14,8 +27,13 @@ function Header() {
           </div>
           <h1 className="text-5xl ml-2 font-Satisfy font-extralight">Eatty</h1>
         </div>
-        <form className="flex align-middle bg-white rounded-full shadow-xl">
+        <form
+          onSubmit={clickSearchHandle}
+          className="flex align-middle bg-white rounded-full shadow-xl"
+        >
           <input
+            value={inputData}
+            onChange={(event) => setInputData(event.target.value)}
             type="search"
             placeholder="Search over 1,000,000 recipes..."
             className="p-2.5 rounded-full relative outline-none w-[19rem]"
@@ -35,6 +53,7 @@ function Header() {
             <BsBookmarkStar className="fill-[#F08080] w-5 h-5" />
             BOOKMARKS
           </li>
+          <li>{data && data?.count}</li>
         </ul>
       </div>
     </>
