@@ -7,13 +7,12 @@ import { BsBookmarkStar } from 'react-icons/bs';
 function Header() {
   return (
     <>
-      {' '}
       <div className="flex justify-between bg-[#F8EDEB] p-4 rounded-t-md">
         <div className="flex">
           <div className="w-12 h-12 bg-gradient-to-r from-[#FEC89A] to-[#F08080] rounded-full left-0 shrink-0">
             <MdFastfood className="w-12 h-12 p-[0.4rem] fill-white mx-auto" />
           </div>
-          <h1 className="font-bold text-5xl ml-2">Haval</h1>
+          <h1 className="text-5xl ml-2 font-Satisfy font-extralight">Eatty</h1>
         </div>
         <form className="flex align-middle bg-white rounded-full shadow-xl">
           <input

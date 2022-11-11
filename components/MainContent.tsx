@@ -10,7 +10,7 @@ import { RiCheckFill } from 'react-icons/ri';
 function MainContent() {
   return (
     <>
-      <div className=" bg-[#F8EDEB] flex-1">
+      <div className=" bg-[#F8EDEB] flex-1 rounded-br-md">
         <div>
           <div className="h-[20rem] w-full bg-[url('../public/images/kb.png')] bg-no-repeat bg-cover bg-center"></div>
         </div>
@@ -43,7 +43,7 @@ function MainContent() {
           </div>
         </div>
         <div className="pb-11 bg-[#E8E8E4]">
-          <h2 className="text-2xl text-center py-10 text-[#F08080]">
+          <h2 className=" text-center py-10 text-transparent text-3xl bg-clip-text bg-gradient-to-r from-[#FEC89A] to-[#F08080] ">
             RECIPE INGRIDIENTS
           </h2>
           <ul className="grid grid-cols-2 gap-4">
@@ -73,15 +73,15 @@ function MainContent() {
             </li>
           </ul>
         </div>
-        <div className="bg-[#FAE1DD]">
-          <h2 className="text-2xl text-center py-10 text-[#F08080]">
+        <div className="bg-[#FAE1DD]  rounded-br-md">
+          <h2 className=" text-center py-10 text-transparent text-2xl bg-clip-text bg-gradient-to-r from-[#FEC89A] to-[#F08080] ">
             HOW TO COOK IT
           </h2>
           <p className="mx-5">
             This recipe was carefully designed and tested by Epicurious. Please
             check out directions at their website.
           </p>
-          <div className="flex justify-center">
+          <div className="flex justify-center  rounded-br-md">
             <button className="flex w-[9rem] h-10 bg-gradient-to-r from-[#FEC89A] to-[#F08080] rounded-full justify-center items-center my-10 hover:scale-105 transition duration-300 ease-in-out text-white">
               DIRECTIONS
               <BiRightArrowAlt className="w-6 h-6 fill-white" />

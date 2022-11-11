@@ -3,8 +3,10 @@ import Head from 'next/head';
 import Header from '../components/Header';
 import LeftSidebar from '../components/LeftSidebar';
 import MainContent from '../components/MainContent';
+import { useState, useEffect } from 'react';
 
 export default function Home() {
+  const [isLoading, setIsLoading] = useState(true);
   return (
     <>
       <div>
@@ -34,7 +36,7 @@ export default function Home() {
               <div className="flex h-full  grow">
                 <div className="flex grow">
                   {/* Left sidebar */}
-                  <LeftSidebar />
+                  <LeftSidebar isLoading={isLoading} />
                   {/* main content */}
                   <MainContent />
                 </div>

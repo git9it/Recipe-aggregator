@@ -9,6 +9,7 @@ module.exports = {
     extend: {},
     fontFamily: {
       Chivo: ['Chivo', 'sans-serif'],
+      Satisfy: ['Satisfy', 'cursive'],
     },
   },
   plugins: [],

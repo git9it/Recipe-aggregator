@@ -4,8 +4,9 @@ import kebab from '../public/images/kebab.jpg';
 import kebab2 from '../public/images/kebab2.jpg';
 import kebab3 from '../public/images/kebab3.jpg';
 import { BiLeftArrowAlt, BiRightArrowAlt } from 'react-icons/bi';
+import Loader from './Loader';
 
-function LeftSidebar() {
+function LeftSidebar({ isLoading }) {
   return (
     <>
       <div className=" bg-white basis-1/3 py-5  rounded-bl-md">
@@ -50,7 +51,7 @@ function LeftSidebar() {
             <div>ALL RECIPES</div>
           </div>
         </div>
-
+        {isLoading && <Loader />}
         <ul className="flex justify-around mt-5">
           <button className="flex items-center bg-[#FAE1DD] rounded-full w-[4.8rem] h-6 hover:bg-[#FCD5CE] text-[#F08080] text-sm">
             <div className="flex">
