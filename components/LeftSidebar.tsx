@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import kebab from '../public/images/kebab.jpg';
 import kebab2 from '../public/images/kebab2.jpg';
@@ -41,12 +41,23 @@ function LeftSidebar({
   setRecipeId,
   setFetchUrl,
 }: IleftSidebar) {
+  const [currentPage, setCurrentPage] = useState(1);
+  const postsPerPage = 10;
+  const indexOfLastPost = currentPage * postsPerPage; // 10
+  const indexOfFirstPost = indexOfLastPost - postsPerPage; // 0
+  let maxPages;
+  let currentPosts;
+  if (data?.recipes) {
+    maxPages = Math.ceil(data.recipes?.length / postsPerPage);
+    currentPosts = data?.recipes.slice(indexOfFirstPost, indexOfLastPost);
+  }
+
   return (
     <>
-      <div className=" bg-white basis-1/3 py-5  rounded-bl-md">
+      <div className="bg-white w-96 py-5  rounded-bl-md">
         {status === AppStatus.search &&
           data?.recipes &&
-          data.recipes.map((el) => (
+          currentPosts.map((el) => (
             <div
               onClick={() => {
                 setStatus(AppStatus.results);
@@ -55,7 +66,7 @@ function LeftSidebar({
                 );
                 // setRecipeId(Number.parseInt(el.recipe_id));
               }}
-              className="flex items-center mt-1 max-h-13 hover:scale-105 transition duration-300 ease-in-out hover:bg-[#F8EDEB] cursor-pointer"
+              className="flex items-center mt-1 max-h-13 hover:scale-105 transition duration-300 ease-in-out hover:bg-[#FAE1DD] cursor-pointer"
             >
               <img
                 src={el.image_url}
@@ -63,70 +74,48 @@ function LeftSidebar({
                 className="w-[4rem] h-[4rem] rounded-full m-2 shrink-0"
               />
               <div>
-                <div className="truncate text-[#F08080]">
-                  {el.title.toUpperCase()}
+                <div className="text-[#F08080] block truncate">
+                  {el.title.length > 28
+                    ? (el.title = el.title.slice(0, 28).toUpperCase() + '...')
+                    : el.title.toUpperCase()}
+                  {}
                 </div>
                 <div>{el.publisher.toUpperCase()}</div>
               </div>
             </div>
           ))}
-        <div className="flex items-center mt-1 max-h-13 hover:scale-105 transition duration-300 ease-in-out hover:bg-[#F8EDEB] cursor-pointer">
-          <Image
-            src={kebab}
-            className="rounded-full m-2"
-            width={60}
-            height={60}
-            alt=""
-          />
-          <div>
-            <div className="truncate text-[#F08080]">SPICY CHIKEN KEBAB</div>
-            <div>BBC GOODFOOD</div>
-          </div>
-        </div>
-        <div className="flex items-center mt-1 max-h-13 hover:scale-105 transition duration-300 ease-in-out hover:bg-[#F8EDEB] cursor-pointer">
-          <Image
-            src={kebab2}
-            className="rounded-full m-2"
-            width={60}
-            height={60}
-            alt=""
-          />
-          <div>
-            <div className="truncate text-[#F08080]">
-              LAMB KEBABS WITH MINT PESTO
-            </div>
-            <div>EPICURIOUS </div>
-          </div>
-        </div>
-        <div className="flex items-center mt-1 max-h-13 hover:scale-105 transition duration-300 ease-in-out hover:bg-[#F8EDEB] cursor-pointer">
-          <Image
-            src={kebab3}
-            className="rounded-full m-2"
-            width={60}
-            height={60}
-            alt=""
-          />
-          <div>
-            <div className="truncate text-[#F08080]">KOFTA KEBAB</div>
-            <div>ALL RECIPES</div>
-          </div>
-        </div>
-        {isLoading && <Loader />}
-        <ul className="flex justify-around mt-5">
-          <button className="flex items-center bg-[#FAE1DD] rounded-full w-[4.8rem] h-6 hover:bg-[#FCD5CE] text-[#F08080] text-sm">
-            <div className="flex">
-              <BiLeftArrowAlt className="w-5 h-5 fill-[#F08080]" />
-              Page 1
-            </div>
-          </button>
 
-          <button className="flex items-center bg-[#FAE1DD] rounded-full w-[4.8rem] h-6 hover:bg-[#FCD5CE] text-[#F08080] text-sm">
-            <div className="flex">
-              Page 3
-              <BiRightArrowAlt className="w-5 h-5 fill-[#F08080]" />
-            </div>
-          </button>
-        </ul>
+        {isLoading && <Loader />}
+        {status === AppStatus.search && data?.recipes && (
+          <ul className="flex justify-around mt-5">
+            {currentPage > 1 && (
+              <button
+                onClick={() => {
+                  setCurrentPage((prevState) => prevState - 1);
+                }}
+                className="flex items-center bg-[#FAE1DD] rounded-full w-[4.8rem] h-6 hover:bg-[#FCD5CE] text-[#F08080] text-sm"
+              >
+                <div className="flex">
+                  <BiLeftArrowAlt className="w-5 h-5 fill-[#F08080]" />
+                  Page {currentPage - 1}
+                </div>
+              </button>
+            )}
+            {currentPage < maxPages && (
+              <button
+                onClick={() => {
+                  setCurrentPage((prevState) => prevState + 1);
+                }}
+                className="flex items-center bg-[#FAE1DD] rounded-full w-[4.8rem] h-6 hover:bg-[#FCD5CE] text-[#F08080] text-sm"
+              >
+                <div className="flex">
+                  Page {currentPage + 1}
+                  <BiRightArrowAlt className="w-5 h-5 fill-[#F08080]" />
+                </div>
+              </button>
+            )}
+          </ul>
+        )}
       </div>
     </>
   );
