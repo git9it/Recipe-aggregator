@@ -3,7 +3,7 @@ import Head from 'next/head';
 import Header from '../components/Header';
 import LeftSidebar from '../components/LeftSidebar';
 import MainContent from '../components/MainContent';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import useFetch from '../hooks/useFetch';
 
 export default function Home() {

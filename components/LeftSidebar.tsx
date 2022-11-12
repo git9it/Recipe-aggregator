@@ -1,8 +1,4 @@
 import { useState } from 'react';
-import Image from 'next/image';
-import kebab from '../public/images/kebab.jpg';
-import kebab2 from '../public/images/kebab2.jpg';
-import kebab3 from '../public/images/kebab3.jpg';
 import { BiLeftArrowAlt, BiRightArrowAlt } from 'react-icons/bi';
 import Loader from './Loader';
 
@@ -12,17 +8,15 @@ enum AppStatus {
   results,
 }
 export interface Recipes {
-  count: number;
-  recipes?: RecipesEntity[] | null;
+  status: string;
+  results: number;
+  data: { recipes?: RecipesEntity[] | null };
 }
 export interface RecipesEntity {
   publisher: string;
   title: string;
-  source_url: string;
-  recipe_id: string;
+  id: string;
   image_url: string;
-  social_rank: number;
-  publisher_url: string;
 }
 
 interface IleftSidebar {
@@ -47,22 +41,23 @@ function LeftSidebar({
   const indexOfFirstPost = indexOfLastPost - postsPerPage; // 0
   let maxPages;
   let currentPosts;
-  if (data?.recipes) {
-    maxPages = Math.ceil(data.recipes?.length / postsPerPage);
-    currentPosts = data?.recipes.slice(indexOfFirstPost, indexOfLastPost);
+  if (data?.data.recipes) {
+    maxPages = Math.ceil(data.data.recipes?.length / postsPerPage);
+    currentPosts = data?.data.recipes.slice(indexOfFirstPost, indexOfLastPost);
   }
 
   return (
     <>
       <div className="bg-white w-96 py-5  rounded-bl-md">
         {status === AppStatus.search &&
-          data?.recipes &&
+          data?.data?.recipes &&
           currentPosts.map((el) => (
             <div
               onClick={() => {
                 setStatus(AppStatus.results);
+                console.log(el);
                 setFetchUrl(
-                  `https://forkify-api.herokuapp.com/api/get?rId=${el.recipe_id}`
+                  `https://forkify-api.herokuapp.com/api/v2/recipes/${el.id}`
                 );
                 // setRecipeId(Number.parseInt(el.recipe_id));
               }}
@@ -86,7 +81,7 @@ function LeftSidebar({
           ))}
 
         {isLoading && <Loader />}
-        {status === AppStatus.search && data?.recipes && (
+        {status === AppStatus.search && data?.data?.recipes && (
           <ul className="flex justify-around mt-5">
             {currentPage > 1 && (
               <button

@@ -15,7 +15,9 @@ function Header({ setFetchUrl, data, error, setStatus }) {
   const [inputData, setInputData] = useState('');
   function clickSearchHandle(e) {
     e.preventDefault();
-    setFetchUrl(`https://forkify-api.herokuapp.com/api/search?q=${inputData}`);
+    setFetchUrl(
+      `https://forkify-api.herokuapp.com/api/v2/recipes/?search=${inputData}`
+    );
     setStatus(AppStatus.search);
   }
   return (
