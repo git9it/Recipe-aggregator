@@ -11,9 +11,15 @@ enum AppStatus {
   results,
 }
 
-function Header({ setFetchUrl, data, error, setStatus }) {
+interface IHeader {
+  status: AppStatus;
+  setStatus: React.Dispatch<React.SetStateAction<AppStatus>>;
+  setFetchUrl: React.Dispatch<React.SetStateAction<string | null>>;
+}
+
+function Header({ setFetchUrl, setStatus }: IHeader) {
   const [inputData, setInputData] = useState('');
-  function clickSearchHandle(e) {
+  function clickSearchHandle(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setFetchUrl(
       `https://forkify-api.herokuapp.com/api/v2/recipes/?search=${inputData}`
@@ -22,7 +28,7 @@ function Header({ setFetchUrl, data, error, setStatus }) {
   }
   return (
     <>
-      <div className="flex justify-between bg-[#F8EDEB] p-4 rounded-t-md">
+      <header className="flex justify-between bg-[#F8EDEB] p-4 rounded-t-md">
         <div className="flex">
           <div className="w-12 h-12 bg-gradient-to-r from-[#FEC89A] to-[#F08080] rounded-full left-0 shrink-0">
             <MdFastfood className="w-12 h-12 p-[0.4rem] fill-white mx-auto" />
@@ -55,9 +61,8 @@ function Header({ setFetchUrl, data, error, setStatus }) {
             <BsBookmarkStar className="fill-[#F08080] w-5 h-5" />
             BOOKMARKS
           </li>
-          <li>{data && data?.count}</li>
         </ul>
-      </div>
+      </header>
     </>
   );
 }

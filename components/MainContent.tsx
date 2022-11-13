@@ -49,13 +49,13 @@ function MainContent({
   status,
   setStatus,
 }: IMainContent) {
-  function calcServings(currQuantity, newQuantity) {
+  function calcServings(currQuantity: number, newQuantity: number) {
     return (currQuantity / fetchedRecipe.data.recipe.servings) * newQuantity;
   }
 
   return (
     <>
-      <div className=" bg-[#F8EDEB] flex-1 rounded-br-md">
+      <article className=" bg-[#F8EDEB] flex-1 rounded-br-md">
         {isLoading && <Loader />}
         {}
         {!isLoading &&
@@ -111,9 +111,9 @@ function MainContent({
               </ul>
             </div>
             <div className="bg-[#FAE1DD]  rounded-br-md">
-              <h2 className=" text-center py-10 text-transparent text-2xl bg-clip-text bg-gradient-to-r from-[#FEC89A] to-[#F08080] ">
+              <h3 className=" text-center py-10 text-transparent text-2xl bg-clip-text bg-gradient-to-r from-[#FEC89A] to-[#F08080] ">
                 HOW TO COOK IT
-              </h2>
+              </h3>
               <p className="mx-5">
                 This recipe was carefully designed and tested by Epicurious.
                 Please check out directions at their website.
@@ -137,7 +137,7 @@ function MainContent({
             </h2>
           </div>
         )}
-      </div>
+      </article>
     </>
   );
 }

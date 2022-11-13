@@ -25,6 +25,7 @@ interface IleftSidebar {
   status: AppStatus;
   setStatus: React.Dispatch<React.SetStateAction<AppStatus>>;
   setRecipeId: React.Dispatch<React.SetStateAction<number>>;
+  setFetchUrl: React.Dispatch<React.SetStateAction<string>>;
 }
 
 function LeftSidebar({
@@ -48,9 +49,10 @@ function LeftSidebar({
 
   return (
     <>
-      <div className="bg-white w-96 py-5  rounded-bl-md">
+      <nav className="bg-white w-96 py-5  rounded-bl-md">
         {status === AppStatus.search &&
           data?.data?.recipes &&
+          currentPosts &&
           currentPosts.map((el) => (
             <div
               onClick={() => {
@@ -96,7 +98,7 @@ function LeftSidebar({
                 </div>
               </button>
             )}
-            {currentPage < maxPages && (
+            {maxPages && currentPage < maxPages && (
               <button
                 onClick={() => {
                   setCurrentPage((prevState) => prevState + 1);
@@ -111,7 +113,7 @@ function LeftSidebar({
             )}
           </ul>
         )}
-      </div>
+      </nav>
     </>
   );
 }
