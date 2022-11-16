@@ -7,11 +7,16 @@ enum AppStatus {
   search,
   results,
 }
+export interface AllRecipes {
+  allRecipes: Recipes;
+}
+
 export interface Recipes {
   status: string;
   results: number;
   data: { recipes?: RecipesEntity[] | null };
 }
+
 export interface RecipesEntity {
   publisher: string;
   title: string;
@@ -21,10 +26,9 @@ export interface RecipesEntity {
 
 interface IleftSidebar {
   isLoading: boolean;
-  data: Recipes;
+  data: AllRecipes | null;
   status: AppStatus;
   setStatus: React.Dispatch<React.SetStateAction<AppStatus>>;
-  setRecipeId: React.Dispatch<React.SetStateAction<number>>;
   setFetchUrl: React.Dispatch<React.SetStateAction<string>>;
 }
 
@@ -33,7 +37,6 @@ function LeftSidebar({
   data,
   status,
   setStatus,
-  setRecipeId,
   setFetchUrl,
 }: IleftSidebar) {
   const [currentPage, setCurrentPage] = useState(1);
@@ -42,49 +45,54 @@ function LeftSidebar({
   const indexOfFirstPost = indexOfLastPost - postsPerPage; // 0
   let maxPages;
   let currentPosts;
-  if (data?.data.recipes) {
-    maxPages = Math.ceil(data.data.recipes?.length / postsPerPage);
-    currentPosts = data?.data.recipes.slice(indexOfFirstPost, indexOfLastPost);
+  let recipesData: RecipesEntity[] | null | undefined;
+  if (data?.allRecipes) {
+    recipesData = data.allRecipes.data.recipes;
+    console.log(recipesData);
+  }
+
+  if (recipesData) {
+    maxPages = Math.ceil(recipesData.length / postsPerPage);
+    currentPosts = recipesData.slice(indexOfFirstPost, indexOfLastPost);
   }
 
   return (
     <>
       <nav className="bg-white w-96 py-5  rounded-bl-md">
-        {status === AppStatus.search &&
-          data?.data?.recipes &&
+        {status !== AppStatus.start &&
+          recipesData &&
           currentPosts &&
-          currentPosts.map((el) => (
+          currentPosts.map((post) => (
             <div
               onClick={() => {
-                setStatus(AppStatus.results);
-                console.log(el);
                 setFetchUrl(
-                  `https://forkify-api.herokuapp.com/api/v2/recipes/${el.id}`
+                  `https://forkify-api.herokuapp.com/api/v2/recipes/${post.id}`
                 );
-                // setRecipeId(Number.parseInt(el.recipe_id));
+                setStatus(AppStatus.results);
               }}
               className="flex items-center mt-1 max-h-13 hover:scale-105 transition duration-300 ease-in-out hover:bg-[#FAE1DD] cursor-pointer"
             >
               <img
-                src={el.image_url}
+                src={post.image_url}
                 alt=""
                 className="w-[4rem] h-[4rem] rounded-full m-2 shrink-0"
               />
               <div>
                 <div className="text-[#F08080] block truncate">
-                  {el.title.length > 28
-                    ? (el.title = el.title.slice(0, 28).toUpperCase() + '...')
-                    : el.title.toUpperCase()}
+                  {post.title.length > 28
+                    ? (post.title =
+                        post.title.slice(0, 28).toUpperCase() + '...')
+                    : post.title.toUpperCase()}
                   {}
                 </div>
-                <div>{el.publisher.toUpperCase()}</div>
+                <div>{post.publisher.toUpperCase()}</div>
               </div>
             </div>
           ))}
 
-        {isLoading && <Loader />}
-        {status === AppStatus.search && data?.data?.recipes && (
-          <ul className="flex justify-around mt-5">
+        {isLoading && !recipesData && <Loader />}
+        {status !== AppStatus.start && recipesData && (
+          <div className="flex justify-around mt-5">
             {currentPage > 1 && (
               <button
                 onClick={() => {
@@ -111,7 +119,7 @@ function LeftSidebar({
                 </div>
               </button>
             )}
-          </ul>
+          </div>
         )}
       </nav>
     </>

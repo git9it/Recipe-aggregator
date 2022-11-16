@@ -12,15 +12,15 @@ enum AppStatus {
 }
 
 interface IHeader {
-  status: AppStatus;
   setStatus: React.Dispatch<React.SetStateAction<AppStatus>>;
-  setFetchUrl: React.Dispatch<React.SetStateAction<string | null>>;
+  setFetchUrl: React.Dispatch<React.SetStateAction<string>>;
 }
 
 function Header({ setFetchUrl, setStatus }: IHeader) {
   const [inputData, setInputData] = useState('');
   function clickSearchHandle(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
     setFetchUrl(
       `https://forkify-api.herokuapp.com/api/v2/recipes/?search=${inputData}`
     );
@@ -46,18 +46,27 @@ function Header({ setFetchUrl, setStatus }: IHeader) {
             placeholder="Search over 1,000,000 recipes..."
             className="p-2.5 rounded-full relative outline-none w-[19rem]"
           />
-          <button className="w-[8rem] bg-gradient-to-r from-[#FEC89A] to-[#F08080] rounded-full relative pr-5 text-white flex items-center hover:scale-105 transition duration-300 ease-in-out ">
+          <button
+            className="w-[8rem] bg-gradient-to-r from-[#FEC89A] to-[#F08080] rounded-full relative pr-5
+           text-white flex items-center hover:scale-105 transition duration-300 ease-in-out "
+          >
             <RiSearchLine className="fill-white w-5 h-5 mx-auto" />
             SEARCH
           </button>
         </form>
 
         <ul className="flex justify-evenly items-center">
-          <li className="flex p-2  w-13 h-10  shrink-0 hover:bg-[#E8E8E4] cursor-pointer">
+          <li
+            className="flex p-2  w-13 h-10  shrink-0 hover:bg-[#E8E8E4] cursor-pointer"
+            key="addrecipe"
+          >
             <AiOutlineFileAdd className="fill-[#F08080] w-6 h-6 -mt-1" />
             ADD RECIPE
           </li>
-          <li className="flex p-2  w-13 h-10  shrink-0 hover:bg-[#E8E8E4] cursor-pointer">
+          <li
+            className="flex p-2  w-13 h-10  shrink-0 hover:bg-[#E8E8E4] cursor-pointer"
+            key="bookmark"
+          >
             <BsBookmarkStar className="fill-[#F08080] w-5 h-5" />
             BOOKMARKS
           </li>

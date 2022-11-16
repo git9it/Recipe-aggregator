@@ -15,6 +15,10 @@ enum AppStatus {
   results,
 }
 
+export interface currentRecipe {
+  currentRecipe: FetchedRecipeData;
+}
+
 export interface FetchedRecipeData {
   status: string;
   data: { recipe: Recipe };
@@ -38,53 +42,56 @@ export interface IngredientsEntity {
 
 interface IMainContent {
   isLoading: boolean;
-  data: FetchedRecipeData;
+  data: currentRecipe | null;
   status: AppStatus;
   setStatus: React.Dispatch<React.SetStateAction<AppStatus>>;
 }
 
-function MainContent({
-  isLoading,
-  data: fetchedRecipe,
-  status,
-  setStatus,
-}: IMainContent) {
+function MainContent({ isLoading, data, status, setStatus }: IMainContent) {
+  let currentRecipe: Recipe | null | undefined;
+  if (data?.currentRecipe) {
+    currentRecipe = data.currentRecipe.data.recipe;
+    console.log(currentRecipe);
+  }
+
   function calcServings(currQuantity: number, newQuantity: number) {
-    return (currQuantity / fetchedRecipe.data.recipe.servings) * newQuantity;
+    if (currentRecipe)
+      return (currQuantity / currentRecipe.servings) * newQuantity;
   }
 
   return (
     <>
       <article className=" bg-[#F8EDEB] flex-1 rounded-br-md">
         {isLoading && <Loader />}
-        {}
-        {!isLoading &&
-        status === AppStatus.results &&
-        fetchedRecipe.data.recipe?.title !== null ? (
+
+        {!isLoading && status === AppStatus.results && currentRecipe ? (
           <>
-            {console.log(fetchedRecipe)}
             <div>
-              <div className="h-[20rem] w-full bg-[url('../public/images/kb.png')] bg-no-repeat bg-cover bg-center"></div>
+              <img
+                src={currentRecipe.image_url}
+                alt=""
+                className="h-[20rem] w-full object-cover"
+              />
             </div>
 
             <div className="flex justify-center">
               <h1
                 className="text-5xl font-bold text-white -mt-8 bg-gradient-to-r from-[#FEC89A] to-[#F08080]
-       shadow-xl pt-1 pb-1 -rotate-[3deg] w-1/2 text-center"
+       shadow-xl pt-1 pb-1 -rotate-[3deg] w-[28rem] text-center"
               >
-                {fetchedRecipe.data.recipe && fetchedRecipe.data.recipe.title}
+                {currentRecipe && currentRecipe.title.toUpperCase()}
               </h1>
             </div>
             <div className="flex bg-[#F8EDEB] items-center h-[10rem] justify-around -mt-6">
               <ul className="flex">
-                <li className="flex">
+                <li className="flex" key="minutes">
                   <BiTimeFive className="h-6 w-6 fill-[#F08080] mr-2" />
-                  {fetchedRecipe.data.recipe?.cooking_time} MINUTES
+                  {currentRecipe.cooking_time} MINUTES
                 </li>
 
-                <li className="flex pl-5">
+                <li className="flex pl-5" key="servings">
                   <MdOutlinePeopleAlt className="h-6 w-6 fill-[#F08080] mr-2" />
-                  {fetchedRecipe.data.recipe?.servings} SERVINGS
+                  {currentRecipe.servings} SERVINGS
                 </li>
                 <AiOutlineMinusCircle className="h-5 w-5 fill-[#F08080] ml-2 hover:scale-110 transition duration-300 ease-in-out cursor-pointer" />
                 <AiOutlinePlusCircle className="h-5 w-5 fill-[#F08080] ml-1 hover:scale-110 transition duration-300 ease-in-out cursor-pointer" />
@@ -99,12 +106,13 @@ function MainContent({
                 RECIPE INGRIDIENTS
               </h2>
               <ul className="grid grid-cols-2 gap-4">
-                {fetchedRecipe.data?.recipe?.ingredients &&
-                  fetchedRecipe.data.recipe.ingredients.map((el) => {
+                {currentRecipe.ingredients &&
+                  currentRecipe.ingredients.map((ingridient, index) => {
                     return (
-                      <li className="flex ml-3">
+                      <li className="flex ml-3" key={index}>
                         <RiCheckFill className=" fill-[#F08080] w-6 h-6 shrink-0" />
-                        {el.quantity} {el.unit} {el.description}
+                        {ingridient.quantity} {ingridient.unit}{' '}
+                        {ingridient.description}
                       </li>
                     );
                   })}
@@ -120,7 +128,7 @@ function MainContent({
               </p>
               <div className="flex justify-center  rounded-br-md">
                 <a
-                  href={fetchedRecipe.data.recipe?.source_url}
+                  href={currentRecipe.source_url}
                   className="flex w-[9rem] h-10 bg-gradient-to-r from-[#FEC89A] to-[#F08080] rounded-full justify-center items-center my-10 hover:scale-105 transition duration-300 ease-in-out text-white"
                 >
                   DIRECTIONS
