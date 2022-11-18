@@ -10,6 +10,7 @@ module.exports = {
     fontFamily: {
       Chivo: ['Chivo', 'sans-serif'],
       Satisfy: ['Satisfy', 'cursive'],
+      Oxygen: ['Oxygen', 'sans-serif'],
     },
   },
   plugins: [],

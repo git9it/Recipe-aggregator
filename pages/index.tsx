@@ -21,8 +21,8 @@ export default function Home() {
     <>
       <div>
         <Head>
-          <title>JRAT</title>
-          <meta name="description" content="JRAT" />
+          <title>Eatty</title>
+          <meta name="description" content="Eatty - recipe aggregator" />
           <link rel="icon" href="/favicon.ico" />
         </Head>
 
@@ -34,16 +34,17 @@ export default function Home() {
         from-[#FAE1DD]
         to-[#F08080]
         items-center
-         font-Chivo
+         font-Oxygen
          text-[#615551]
         "
         >
           <section className="min-h-screen">
-            <div className="block m-10 bg-white border-y-black shadow-lg rounded-md min-h-screen max-w-6xl">
+            <div className="lg:mt-10 md:mt-0 sm:mt-0"></div>
+            <div className="max-w-5xl min-h-screen m-10 bg-white rounded-md shadow-lg lg:block border-y-black md:m-0">
               {/* Header */}
               <Header setFetchUrl={setFetchUrl} setStatus={setStatus} />
 
-              <div className="flex h-full  grow">
+              <div className="flex h-full grow">
                 <div className="flex grow">
                   {/* Left sidebar */}
                   <LeftSidebar
@@ -63,8 +64,8 @@ export default function Home() {
                 </div>
               </div>
             </div>
+            <div className="lg:mt-10 md:mt-0"></div>
           </section>
-          <footer className="p-10 mt-10">here is footer</footer>
         </main>
       </div>
     </>

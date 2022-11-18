@@ -1,5 +1,5 @@
-import React from 'react';
-import { BsBookmarkStar } from 'react-icons/bs';
+import { useState, useReducer } from 'react';
+import { BsBookmarkStar, BsBookmarkStarFill } from 'react-icons/bs';
 import { BiTimeFive } from 'react-icons/bi';
 import { MdOutlinePeopleAlt } from 'react-icons/md';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
@@ -48,24 +48,60 @@ interface IMainContent {
 }
 
 function MainContent({ isLoading, data, status, setStatus }: IMainContent) {
+  const [currentServings, setCurrentServings] = useState(4);
+  const [_, forceUpdate] = useReducer((x) => x + 1, 0);
+
   let currentRecipe: Recipe | null | undefined;
   if (data?.currentRecipe) {
     currentRecipe = data.currentRecipe.data.recipe;
-    console.log(currentRecipe);
   }
 
-  function calcServings(currQuantity: number, newQuantity: number) {
+  function calcServings(
+    currQuantity: number | null | undefined,
+    newQuantity: number
+  ) {
     if (currentRecipe)
-      return (currQuantity / currentRecipe.servings) * newQuantity;
+      if (typeof currQuantity === 'number')
+        return ((currQuantity / currentRecipe.servings) * newQuantity).toFixed(
+          1
+        );
+  }
+
+  function addBookmark() {
+    if (currentRecipe)
+      localStorage[currentRecipe?.id] = JSON.stringify({
+        ...currentRecipe,
+        ...{ isBookmarked: true },
+      });
+
+    if (currentRecipe) {
+      let bookmark = JSON.parse(localStorage[currentRecipe?.id]);
+      console.log(localStorage[currentRecipe?.id]);
+      forceUpdate();
+
+      for (let key in localStorage) {
+        if (!localStorage.hasOwnProperty(key)) {
+          continue;
+        }
+        let bookmark = JSON.parse(localStorage.getItem(key));
+        console.log(`${key}: ${bookmark.title}`);
+      }
+    }
+  }
+
+  function deleteBookmark() {
+    if (currentRecipe) delete localStorage[currentRecipe?.id];
+    forceUpdate();
   }
 
   return (
     <>
-      <article className=" bg-[#F8EDEB] flex-1 rounded-br-md">
+      <article className=" bg-[#F8EDEB] flex-1 rounded-br-md ">
         {isLoading && <Loader />}
 
         {!isLoading && status === AppStatus.results && currentRecipe ? (
           <>
+            {}
             <div>
               <img
                 src={currentRecipe.image_url}
@@ -76,7 +112,7 @@ function MainContent({ isLoading, data, status, setStatus }: IMainContent) {
 
             <div className="flex justify-center">
               <h1
-                className="text-5xl font-bold text-white -mt-8 bg-gradient-to-r from-[#FEC89A] to-[#F08080]
+                className="text-4xl font-bold text-white -mt-8 bg-gradient-to-r from-[#FEC89A] to-[#F08080]
        shadow-xl pt-1 pb-1 -rotate-[3deg] w-[28rem] text-center"
               >
                 {currentRecipe && currentRecipe.title.toUpperCase()}
@@ -91,15 +127,30 @@ function MainContent({ isLoading, data, status, setStatus }: IMainContent) {
 
                 <li className="flex pl-5" key="servings">
                   <MdOutlinePeopleAlt className="h-6 w-6 fill-[#F08080] mr-2" />
-                  {currentRecipe.servings} SERVINGS
+                  {currentServings} SERVINGS
                 </li>
-                <AiOutlineMinusCircle className="h-5 w-5 fill-[#F08080] ml-2 hover:scale-110 transition duration-300 ease-in-out cursor-pointer" />
-                <AiOutlinePlusCircle className="h-5 w-5 fill-[#F08080] ml-1 hover:scale-110 transition duration-300 ease-in-out cursor-pointer" />
+                <button onClick={() => setCurrentServings((prev) => prev - 1)}>
+                  <AiOutlineMinusCircle className="h-5 w-5 fill-[#F08080] ml-2 hover:scale-110 transition duration-300 ease-in-out cursor-pointer" />
+                </button>
+                <button onClick={() => setCurrentServings((prev) => prev + 1)}>
+                  <AiOutlinePlusCircle className="h-5 w-5 fill-[#F08080] ml-1 hover:scale-110 transition duration-300 ease-in-out cursor-pointer" />
+                </button>
               </ul>
-
-              <div className="bg-gradient-to-r from-[#FEC89A] to-[#F08080] rounded-full left-0 hover:scale-105 transition duration-300 ease-in-out cursor-pointer">
-                <BsBookmarkStar className="w-12 h-12 p-[0.4rem] fill-white mx-auto" />
-              </div>
+              {localStorage[currentRecipe?.id] ? (
+                <button
+                  onClick={() => deleteBookmark()}
+                  className="w-13 h-13 bg-gradient-to-r from-[#FEC89A] to-[#F08080] rounded-full shrink-0 left-0 hover:scale-105 transition duration-300 ease-in-out cursor-pointer"
+                >
+                  <BsBookmarkStarFill className="w-12 h-12  shrink-0 p-[0.4rem] fill-white mx-auto" />
+                </button>
+              ) : (
+                <button
+                  onClick={() => addBookmark()}
+                  className="w-13 h-13 bg-gradient-to-r from-[#FEC89A] to-[#F08080] rounded-full shrink-0 left-0 hover:scale-105 transition duration-300 ease-in-out cursor-pointer"
+                >
+                  <BsBookmarkStar className="w-12 h-12  shrink-0 p-[0.4rem] fill-white mx-auto" />
+                </button>
+              )}
             </div>
             <div className="pb-11 bg-[#E8E8E4]">
               <h2 className=" text-center py-10 text-transparent text-3xl bg-clip-text bg-gradient-to-r from-[#FEC89A] to-[#F08080] ">
@@ -111,8 +162,8 @@ function MainContent({ isLoading, data, status, setStatus }: IMainContent) {
                     return (
                       <li className="flex ml-3" key={index}>
                         <RiCheckFill className=" fill-[#F08080] w-6 h-6 shrink-0" />
-                        {ingridient.quantity} {ingridient.unit}{' '}
-                        {ingridient.description}
+                        {calcServings(ingridient.quantity, currentServings)}{' '}
+                        {ingridient.unit} {ingridient.description}
                       </li>
                     );
                   })}
@@ -123,10 +174,11 @@ function MainContent({ isLoading, data, status, setStatus }: IMainContent) {
                 HOW TO COOK IT
               </h3>
               <p className="mx-5">
-                This recipe was carefully designed and tested by Epicurious.
-                Please check out directions at their website.
+                This recipe was carefully designed and tested by{' '}
+                {currentRecipe.publisher.toUpperCase()}. Please check out
+                directions at their website.
               </p>
-              <div className="flex justify-center  rounded-br-md">
+              <div className="flex justify-center rounded-br-md">
                 <a
                   href={currentRecipe.source_url}
                   className="flex w-[9rem] h-10 bg-gradient-to-r from-[#FEC89A] to-[#F08080] rounded-full justify-center items-center my-10 hover:scale-105 transition duration-300 ease-in-out text-white"
@@ -138,11 +190,13 @@ function MainContent({ isLoading, data, status, setStatus }: IMainContent) {
             </div>
           </>
         ) : (
-          <div className="min-h-screen w-full bg-[#F8EDEB] shrink-0 text-center">
-            <h2 className="text-center p-10 text-transparent text-2xl bg-clip-text bg-gradient-to-r from-[#FEC89A] to-[#F08080]">
-              <FaArrowUp className="w-7 h-7" />
-              Start by searching for a recipe or an ingredient. Have fun!
-            </h2>
+          <div>
+            <div className="min-h-screen bg-[#F8EDEB] shrink-0 text-center mx">
+              <h2 className=" text-center p-10 text-transparent text-2xl bg-clip-text bg-gradient-to-r from-[#FEC89A] to-[#F08080]">
+                <FaArrowUp className="w-7 h-7" />
+                Start by searching for a recipe or an ingredient. Have fun!
+              </h2>
+            </div>
           </div>
         )}
       </article>

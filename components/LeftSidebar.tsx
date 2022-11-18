@@ -46,9 +46,8 @@ function LeftSidebar({
   let maxPages;
   let currentPosts;
   let recipesData: RecipesEntity[] | null | undefined;
-  if (data?.allRecipes) {
+  if (data?.allRecipes?.data?.recipes) {
     recipesData = data.allRecipes.data.recipes;
-    console.log(recipesData);
   }
 
   if (recipesData) {
@@ -58,7 +57,7 @@ function LeftSidebar({
 
   return (
     <>
-      <nav className="bg-white w-96 py-5  rounded-bl-md">
+      <nav className="py-5 bg-white w-96 rounded-bl-md">
         {status !== AppStatus.start &&
           recipesData &&
           currentPosts &&
@@ -66,7 +65,7 @@ function LeftSidebar({
             <div
               onClick={() => {
                 setFetchUrl(
-                  `https://forkify-api.herokuapp.com/api/v2/recipes/${post.id}`
+                  `https://forkify-api.herokuapp.com/api/v2/recipes/${post.id}?key=99187270-7ef2-40f7-9b20-cb31a126fbad`
                 );
                 setStatus(AppStatus.results);
               }}
@@ -78,14 +77,16 @@ function LeftSidebar({
                 className="w-[4rem] h-[4rem] rounded-full m-2 shrink-0"
               />
               <div>
-                <div className="text-[#F08080] block truncate">
-                  {post.title.length > 28
+                <div className="text-[#F08080] block ml-2 text-sm">
+                  {post.title.length > 31
                     ? (post.title =
-                        post.title.slice(0, 28).toUpperCase() + '...')
+                        post.title.slice(0, 31).toUpperCase() + '...')
                     : post.title.toUpperCase()}
                   {}
                 </div>
-                <div>{post.publisher.toUpperCase()}</div>
+                <div className="ml-2 text-sm">
+                  {post.publisher.toUpperCase()}
+                </div>
               </div>
             </div>
           ))}

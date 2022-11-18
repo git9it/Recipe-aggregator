@@ -15,7 +15,6 @@ function useFetch(url) {
     };
   }
 
-  console.log(url);
   useEffect(() => {
     if (!url) return;
 
@@ -33,8 +32,6 @@ function useFetch(url) {
             ...recipesData,
           }));
         } else {
-          console.log(json);
-          console.log(cache.current.allRecipes);
           const recipesData = { currentRecipe: json };
           setData(() => ({
             ...cache.current,
