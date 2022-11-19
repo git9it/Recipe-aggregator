@@ -1,8 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 function Bookmarks() {
+  const [isSSR, setIsSSR] = useState(false);
+  useEffect(() => setIsSSR(true));
   let recipesArr = [];
-  if (typeof window !== 'undefined' && localStorage)
+  if (isSSR && localStorage)
     for (let key in localStorage) {
       if (!localStorage.hasOwnProperty(key)) {
         continue;
@@ -13,7 +15,7 @@ function Bookmarks() {
   return recipesArr.map((post) => (
     <div
       onClick={() => {}}
-      className="flex items-center mt-1 max-h-13 hover:scale-105 transition duration-300 ease-in-out hover:bg-[#FAE1DD] cursor-pointer"
+      className="flex items-center mt-1 max-h-13 hover:bg-[#FAE1DD] cursor-pointer"
     >
       <img
         src={post.image_url}
@@ -22,8 +24,8 @@ function Bookmarks() {
       />
       <div>
         <div className="text-[#F08080] block ml-2 text-sm">
-          {post.title?.length > 31
-            ? (post.title = post.title.slice(0, 31).toUpperCase() + '...')
+          {post.title?.length > 26
+            ? (post.title = post.title.slice(0, 26).toUpperCase() + '...')
             : post.title?.toUpperCase()}
           {}
         </div>
