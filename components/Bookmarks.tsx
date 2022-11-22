@@ -10,8 +10,11 @@ function Bookmarks() {
         continue;
       }
       let bookmark;
-      if (key.length === 24) bookmark = JSON.parse(localStorage.getItem(key));
-      recipesArr.push(bookmark);
+      if (key.startsWith('5ed6604691c37cdc054b')) {
+        console.log(key);
+        bookmark = JSON.parse(localStorage.getItem(key));
+        recipesArr.push(bookmark);
+      }
     }
   if (recipesArr.length > 0) {
     return recipesArr.map((post) => (
