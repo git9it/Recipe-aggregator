@@ -52,7 +52,11 @@ function LeftSidebar({
 
   if (recipesData) {
     maxPages = Math.ceil(recipesData.length / postsPerPage);
-    currentPosts = recipesData.slice(indexOfFirstPost, indexOfLastPost);
+    currentPosts = recipesData.slice(
+      indexOfFirstPost,
+      indexOfLastPost,
+      setFetchUrl
+    );
   }
 
   return (
@@ -64,9 +68,9 @@ function LeftSidebar({
           currentPosts.map((post) => (
             <div
               onClick={() => {
-                setFetchUrl(
-                  `https://forkify-api.herokuapp.com/api/v2/recipes/${post.id}?key=99187270-7ef2-40f7-9b20-cb31a126fbad`
-                );
+                setFetchUrl({
+                  url: `https://forkify-api.herokuapp.com/api/v2/recipes/${post.id}?key=99187270-7ef2-40f7-9b20-cb31a126fbad`,
+                });
                 setStatus(AppStatus.results);
               }}
               className="flex items-center mt-1 max-h-13 hover:scale-105 transition duration-300 ease-in-out hover:bg-[#FAE1DD] cursor-pointer"
@@ -74,7 +78,7 @@ function LeftSidebar({
               <img
                 src={post.image_url}
                 alt=""
-                className="w-[4rem] h-[4rem] rounded-full m-2 shrink-0"
+                className="w-[4rem] h-[4rem] rounded-full ml-4  m-2 shrink-0"
               />
               <div>
                 <div className="text-[#F08080] block ml-2 text-sm">

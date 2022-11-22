@@ -3,9 +3,9 @@ import { MdFastfood } from 'react-icons/md';
 import { RiSearchLine } from 'react-icons/ri';
 import { AiOutlineFileAdd } from 'react-icons/ai';
 import { BsBookmarkStar } from 'react-icons/bs';
-import { BsBookmarkStarFill } from 'react-icons/bs';
 import { useState } from 'react';
 import Bookmarks from './Bookmarks';
+import UploadForm from './UploadForm';
 
 enum AppStatus {
   start,
@@ -20,6 +20,7 @@ interface IHeader {
 
 function Header({ setFetchUrl, setStatus }: IHeader) {
   const [inputData, setInputData] = useState('');
+  const [isUploadPopupOpen, setIsUploadPopupOpen] = useState(false);
 
   function bookmarkHandle() {
     let recipesArr = [];
@@ -36,9 +37,9 @@ function Header({ setFetchUrl, setStatus }: IHeader) {
   function clickSearchHandle(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    setFetchUrl(
-      `https://forkify-api.herokuapp.com/api/v2/recipes/?search=${inputData}?key=99187270-7ef2-40f7-9b20-cb31a126fbad`
-    );
+    setFetchUrl({
+      url: `https://forkify-api.herokuapp.com/api/v2/recipes?search=${inputData}&key=99187270-7ef2-40f7-9b20-cb31a126fbad`,
+    });
     setStatus(AppStatus.search);
   }
   return (
@@ -70,15 +71,16 @@ function Header({ setFetchUrl, setStatus }: IHeader) {
           </button>
         </form>
 
-        <ul className="flex items-center mx-5 justify-evenly">
-          <li
+        <ul className="flex items-center mx-5 justify">
+          <button
+            onClick={() => setIsUploadPopupOpen((prev) => !prev)}
             className="flex p-2  w-13 h-10  shrink-0 hover:bg-[#E8E8E4] cursor-pointer"
             key="addrecipe"
           >
             <AiOutlineFileAdd className="peer fill-[#F08080] w-6 h-6 -mt-1" />
             ADD RECIPE
-          </li>
-          <div>
+          </button>
+          <div className="relative">
             <button
               className="peer flex p-2  w-13 h-10  shrink-0 hover:bg-[#E8E8E4] cursor-pointer"
               key="bookmark"
@@ -87,14 +89,19 @@ function Header({ setFetchUrl, setStatus }: IHeader) {
               BOOKMARKS
             </button>
             <div
-              className="hidden absolute peer-hover:flex hover:flex
-         w-[250px] mr-20
+              className="hidden absolute z-10 -left-[75px]  peer-hover:flex hover:flex
+         w-[250px]
          flex-col bg-white drop-shadow-lg"
             >
               <Bookmarks />
             </div>
           </div>
         </ul>
+        <UploadForm
+          setFetchUrl={setFetchUrl}
+          isUploadPopupOpen={isUploadPopupOpen}
+          setIsUploadPopupOpen={setIsUploadPopupOpen}
+        />
       </header>
     </>
   );

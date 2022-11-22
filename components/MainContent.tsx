@@ -7,6 +7,7 @@ import { AiOutlineMinusCircle } from 'react-icons/ai';
 import { BiRightArrowAlt } from 'react-icons/bi';
 import { RiCheckFill } from 'react-icons/ri';
 import { FaArrowUp } from 'react-icons/fa';
+
 import Loader from './Loader';
 
 enum AppStatus {
@@ -47,7 +48,13 @@ interface IMainContent {
   setStatus: React.Dispatch<React.SetStateAction<AppStatus>>;
 }
 
-function MainContent({ isLoading, data, status, setStatus }: IMainContent) {
+function MainContent({
+  isLoading,
+  data,
+  status,
+  setStatus,
+  isUploadPopupOpen,
+}: IMainContent) {
   const [currentServings, setCurrentServings] = useState(4);
   const [_, forceUpdate] = useReducer((x) => x + 1, 0);
 
@@ -90,6 +97,7 @@ function MainContent({ isLoading, data, status, setStatus }: IMainContent) {
   }
 
   function deleteBookmark() {
+    console.log(data);
     if (currentRecipe) delete localStorage[currentRecipe?.id];
     forceUpdate();
   }

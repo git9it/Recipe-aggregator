@@ -40,7 +40,7 @@ export default function Home() {
         >
           <section className="min-h-screen">
             <div className="lg:mt-10 md:mt-0 sm:mt-0"></div>
-            <div className="max-w-5xl min-h-screen m-10 bg-white rounded-md shadow-lg lg:block border-y-black md:m-0">
+            <div className="max-w-5xl min-h-screen m-10 overflow-hidden bg-white rounded-md shadow-lg lg:block border-y-black md:m-0">
               {/* Header */}
               <Header setFetchUrl={setFetchUrl} setStatus={setStatus} />
 
