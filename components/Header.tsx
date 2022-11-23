@@ -15,24 +15,13 @@ enum AppStatus {
 
 interface IHeader {
   setStatus: React.Dispatch<React.SetStateAction<AppStatus>>;
-  setFetchUrl: React.Dispatch<React.SetStateAction<string>>;
+  setFetchUrl: React.Dispatch<React.SetStateAction<object>>;
+  data: {};
 }
 
-function Header({ setFetchUrl, setStatus }: IHeader) {
+function Header({ setFetchUrl, setStatus, data }: IHeader) {
   const [inputData, setInputData] = useState('');
   const [isUploadPopupOpen, setIsUploadPopupOpen] = useState(false);
-
-  function bookmarkHandle() {
-    let recipesArr = [];
-    for (let key in localStorage) {
-      if (!localStorage.hasOwnProperty(key)) {
-        continue;
-      }
-      let bookmark = JSON.parse(localStorage.getItem(key));
-      recipesArr.push(bookmark.title);
-    }
-    return recipesArr;
-  }
 
   function clickSearchHandle(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -98,6 +87,7 @@ function Header({ setFetchUrl, setStatus }: IHeader) {
           </div>
         </ul>
         <UploadForm
+          data={data}
           setFetchUrl={setFetchUrl}
           isUploadPopupOpen={isUploadPopupOpen}
           setIsUploadPopupOpen={setIsUploadPopupOpen}

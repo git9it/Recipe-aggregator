@@ -3,11 +3,10 @@ import { useEffect, useState, useRef } from 'react';
 interface IUseFetch {
   url: string;
   method: string;
-  postdata?: object;
+  postdata: object;
 }
 
-function useFetch({ url, method = 'get', postdata = {} }) {
-  console.log(url, method);
+function useFetch({ url, method = 'get', postdata = {} }: IUseFetch) {
   const [isLoading, setLoading] = useState(false);
   const [data, setData] = useState<object | null>(null);
   const [error, setError] = useState(null);
@@ -27,7 +26,6 @@ function useFetch({ url, method = 'get', postdata = {} }) {
     async function fetchData() {
       setLoading(true);
       if (method === 'get') {
-        console.log('if method get');
         try {
           const response = await fetch(url);
           const json = await response.json();
@@ -53,7 +51,6 @@ function useFetch({ url, method = 'get', postdata = {} }) {
         setLoading(false);
       }
       if (method === 'post') {
-        console.log('if method post');
         try {
           const response = await fetch(url, {
             method: 'POST',
@@ -63,14 +60,13 @@ function useFetch({ url, method = 'get', postdata = {} }) {
             body: JSON.stringify(postdata),
           });
           const json = await response.json();
-          console.log(json);
           const postReturn = { postReturn: json };
+          console.log(cache.current, postReturn);
           setData(() => ({
             ...cache.current,
             ...postReturn,
           }));
         } catch (error) {
-          console.log(error);
           setError(error);
         }
         setLoading(false);

@@ -1,6 +1,21 @@
 import React from 'react';
 
-function UploadFormInput({ inputObj, name }) {
+interface IUploadFormInput {
+  inputObj: {
+    value: string;
+    isDirty: boolean;
+    isEmpty: boolean;
+    minLengthError: boolean;
+    maxLengthError: boolean;
+    urlError: boolean;
+    ingridientsError: boolean;
+    onChange: Function;
+    onBlur: Function;
+  };
+  name: string;
+}
+
+function UploadFormInput({ inputObj, name }: IUploadFormInput) {
   return (
     <>
       <div className="flex justify-between">
@@ -13,15 +28,15 @@ function UploadFormInput({ inputObj, name }) {
           type="text"
           name={name}
         />
-        {console.log(name, inputObj.minLength)}
+
         {inputObj.isDirty && inputObj.isEmpty && (
           <div className="mt-2 text-xs text-red-600">Cannot be empty!</div>
         )}
-        {inputObj.isDirty && inputObj.minLength && (
-          <div className="mt-2 text-xs text-red-600">Too short!</div>
+        {inputObj.isDirty && inputObj.minLengthError && (
+          <div className="mt-2 text-xs text-red-500">Too short!</div>
         )}
         {inputObj.isDirty && inputObj.urlError && (
-          <div className="mt-2 text-xs text-red-600">This isn't url!</div>
+          <div className="mt-2 text-xs text-red-500">This isn't url!!</div>
         )}
         {inputObj.isDirty && inputObj.ingridientsError && (
           <div className="mt-2 text-xs text-red-600">Wrong format!</div>

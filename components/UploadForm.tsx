@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { FiUploadCloud } from 'react-icons/fi';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 import useInput from '../hooks/useInput';
@@ -14,9 +13,9 @@ function UploadForm({
   const URL = useInput('', { isEmpty: true, isUrl: true });
   const IMAGEURL = useInput('', { isEmpty: true, isUrl: true });
   const PUBLISHER = useInput('', { isEmpty: true, minLength: 3 });
-  const TIME = useInput('', { isEmpty: true, minLength: 3 });
-  const SERVINGS = useInput('', { isEmpty: true, minLength: 3 });
-  const INGRIDIENT1 = useInput('', { isIngridients: true, isUrl: false });
+  const TIME = useInput('', { isEmpty: true });
+  const SERVINGS = useInput('', { isEmpty: true });
+  const INGRIDIENT1 = useInput('', { isIngridients: true });
   const INGRIDIENT2 = useInput('', { isIngridients: true });
   const INGRIDIENT3 = useInput('', { isIngridients: true });
   const INGRIDIENT4 = useInput('', { isIngridients: true });
@@ -64,7 +63,7 @@ function UploadForm({
       <div
         className={`${
           isUploadPopupOpen ? null : 'hidden'
-        } fixed z-20 w-2/3 bg-white rounded-2xl left-1/4 top-[150px] drop-shadow-lg flex flex-col items-center`}
+        } fixed z-20 w-2/3 bg-white rounded-2xl left-[160px] top-[80px] drop-shadow-lg flex flex-col items-center`}
       >
         <AiOutlineCloseCircle
           onClick={() => setIsUploadPopupOpen(false)}
@@ -93,15 +92,16 @@ function UploadForm({
         </div>
         <button
           onClick={() => {
-            console.log(postdata, INGRIDIENT1);
-            // setFetchUrl({
-            //   url: 'https://forkify-api.herokuapp.com/api/v2/recipes?search=pizza&key=99187270-7ef2-40f7-9b20-cb31a126fbad',
-            //   method: 'post',
-            //   postdata: postdata,
-            // });
-            // if (data?.postReturn) {
-            //   console.log(data.postReturn);
-            // }
+            setFetchUrl({
+              url: 'https://forkify-api.herokuapp.com/api/v2/recipes?key=99187270-7ef2-40f7-9b20-cb31a126fbad',
+              method: 'post',
+              postdata: postdata,
+            });
+            if (data?.postReturn.status === 'success') {
+              console.log('success');
+              URL.value = '';
+              TITLE.value = '';
+            }
           }}
           className="w-40 m-3 h-12 bg-gradient-to-r from-[#FEC89A] to-[#F08080] rounded-full relative pr-5
            text-white flex items-center text-left hover:scale-105 transition duration-300 ease-in-out "

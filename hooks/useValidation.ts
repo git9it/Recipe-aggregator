@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 
 const useValidation = (value, validations) => {
-  const [isEmpty, setEmpty] = useState(true);
-  const [minLength, setMinLength] = useState(false);
+  const [isEmpty, setEmpty] = useState(false);
+  const [minLengthError, setMinLengthError] = useState(false);
   const [maxLengthError, setMaxLengthError] = useState(false);
   const [urlError, setUrlError] = useState(false);
   const [ingridientsError, setIngridientsError] = useState(false);
@@ -12,13 +12,13 @@ const useValidation = (value, validations) => {
       switch (validation) {
         case 'minLength':
           value.length < validations[validation]
-            ? setMinLength(true)
-            : setMinLength(false);
+            ? setMinLengthError(true)
+            : setMinLengthError(false);
           break;
         case 'maxLength':
           value.length > validations[validation]
-            ? setMinLength(true)
-            : setMinLength(false);
+            ? setMaxLengthError(true)
+            : setMaxLengthError(false);
           break;
         case 'isEmpty':
           value ? setEmpty(false) : setEmpty(true);
@@ -41,7 +41,7 @@ const useValidation = (value, validations) => {
   }, [value]);
   return {
     isEmpty,
-    minLength,
+    minLengthError,
     maxLengthError,
     urlError,
     ingridientsError,

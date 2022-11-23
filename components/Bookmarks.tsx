@@ -11,13 +11,13 @@ function Bookmarks() {
       }
       let bookmark;
       if (key.startsWith('5ed6604691c37cdc054b')) {
-        console.log(key);
-        bookmark = JSON.parse(localStorage.getItem(key));
+        const item = localStorage.getItem(key);
+        if (item !== null) bookmark = JSON.parse(item);
         recipesArr.push(bookmark);
       }
     }
   if (recipesArr.length > 0) {
-    return recipesArr.map((post) => (
+    const recipesJSX = recipesArr.map((post) => (
       <div
         onClick={() => {}}
         className="flex items-center mt-1 max-h-13 hover:bg-[#FAE1DD] cursor-pointer"
@@ -38,6 +38,9 @@ function Bookmarks() {
         </div>
       </div>
     ));
+    return recipesJSX;
+  } else {
+    return null;
   }
 }
 

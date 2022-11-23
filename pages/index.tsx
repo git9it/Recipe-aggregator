@@ -42,7 +42,11 @@ export default function Home() {
             <div className="lg:mt-10 md:mt-0 sm:mt-0"></div>
             <div className="max-w-5xl min-h-screen m-10 overflow-hidden bg-white rounded-md shadow-lg lg:block border-y-black md:m-0">
               {/* Header */}
-              <Header setFetchUrl={setFetchUrl} setStatus={setStatus} />
+              <Header
+                setFetchUrl={setFetchUrl}
+                setStatus={setStatus}
+                data={data}
+              />
 
               <div className="flex h-full grow">
                 <div className="flex grow">

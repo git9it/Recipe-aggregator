@@ -7,7 +7,6 @@ import { AiOutlineMinusCircle } from 'react-icons/ai';
 import { BiRightArrowAlt } from 'react-icons/bi';
 import { RiCheckFill } from 'react-icons/ri';
 import { FaArrowUp } from 'react-icons/fa';
-import useValidation from '../hooks/useValidation';
 
 import Loader from './Loader';
 
@@ -49,13 +48,7 @@ interface IMainContent {
   setStatus: React.Dispatch<React.SetStateAction<AppStatus>>;
 }
 
-function MainContent({
-  isLoading,
-  data,
-  status,
-  setStatus,
-  isUploadPopupOpen,
-}: IMainContent) {
+function MainContent({ isLoading, data, status, setStatus }: IMainContent) {
   const [currentServings, setCurrentServings] = useState(4);
   const [_, forceUpdate] = useReducer((x) => x + 1, 0);
 
@@ -81,24 +74,10 @@ function MainContent({
         ...currentRecipe,
         ...{ isBookmarked: true },
       });
-
-    if (currentRecipe) {
-      let bookmark = JSON.parse(localStorage[currentRecipe?.id]);
-      console.log(localStorage[currentRecipe?.id]);
-      forceUpdate();
-
-      for (let key in localStorage) {
-        if (!localStorage.hasOwnProperty(key)) {
-          continue;
-        }
-        let bookmark = JSON.parse(localStorage.getItem(key));
-        console.log(`${key}: ${bookmark.title}`);
-      }
-    }
+    forceUpdate();
   }
 
   function deleteBookmark() {
-    console.log(data);
     if (currentRecipe) delete localStorage[currentRecipe?.id];
     forceUpdate();
   }

@@ -29,7 +29,7 @@ interface IleftSidebar {
   data: AllRecipes | null;
   status: AppStatus;
   setStatus: React.Dispatch<React.SetStateAction<AppStatus>>;
-  setFetchUrl: React.Dispatch<React.SetStateAction<string>>;
+  setFetchUrl: React.Dispatch<React.SetStateAction<object>>;
 }
 
 function LeftSidebar({
@@ -52,11 +52,7 @@ function LeftSidebar({
 
   if (recipesData) {
     maxPages = Math.ceil(recipesData.length / postsPerPage);
-    currentPosts = recipesData.slice(
-      indexOfFirstPost,
-      indexOfLastPost,
-      setFetchUrl
-    );
+    currentPosts = recipesData.slice(indexOfFirstPost, indexOfLastPost);
   }
 
   return (
