@@ -13,13 +13,14 @@ interface IUploadFormInput {
     onBlur: Function;
   };
   name: string;
+  placeholder: string;
 }
 
-function UploadFormInput({ inputObj, name }: IUploadFormInput) {
+function UploadFormInput({ inputObj, name, placeholder }: IUploadFormInput) {
   return (
     <>
       <div className="flex justify-between">
-        <label className="mt-2 text-lg">{name}</label>
+        <label className="mt-2 text-lg shrink-0">{name}</label>
         <input
           value={inputObj.value}
           onChange={(e) => inputObj.onChange(e)}
@@ -27,6 +28,7 @@ function UploadFormInput({ inputObj, name }: IUploadFormInput) {
           className="border-[#ddd] border-solid rounded-md border-[1px] outline-none block w-full m-2 p-1 pl-3 "
           type="text"
           name={name}
+          placeholder={placeholder}
         />
 
         {inputObj.isDirty && inputObj.isEmpty && (

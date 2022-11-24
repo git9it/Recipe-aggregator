@@ -53,7 +53,9 @@ function MainContent({ isLoading, data, status, setStatus }: IMainContent) {
   const [_, forceUpdate] = useReducer((x) => x + 1, 0);
 
   let currentRecipe: Recipe | null | undefined;
-  if (data?.currentRecipe) {
+  if (data?.currentRecipe && AppStatus.results) {
+    console.log(AppStatus.results);
+    console.log(data);
     currentRecipe = data.currentRecipe.data.recipe;
   }
 

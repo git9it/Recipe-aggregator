@@ -68,6 +68,23 @@ function UploadForm({
     servings: SERVINGS.value,
     cooking_time: TIME.value,
   };
+
+  if (data?.postReturn.status === 'success') {
+    console.log('success');
+    PUBLISHER.value = '';
+    URL.value = '';
+    IMAGEURL.value = '';
+    TITLE.value = '';
+    SERVINGS.value = '';
+    TIME.value = '';
+    INGRIDIENT1.value = '';
+    INGRIDIENT2.value = '';
+    INGRIDIENT3.value = '';
+    INGRIDIENT4.value = '';
+    INGRIDIENT5.value = '';
+    INGRIDIENT6.value = '';
+  }
+
   return (
     <div className="relative">
       <div
@@ -89,21 +106,69 @@ function UploadForm({
           <div className="flex flex-col m-2">
             <h2 className="text-3xl">Recipe Data</h2>
 
-            <UploadFormInput name="Title" inputObj={TITLE} />
-            <UploadFormInput name="Url" inputObj={URL} />
-            <UploadFormInput name="Image URL" inputObj={IMAGEURL} />
-            <UploadFormInput name="Publisher" inputObj={PUBLISHER} />
-            <UploadFormInput name="Prep time" inputObj={TIME} />
-            <UploadFormInput name="Servings" inputObj={SERVINGS} />
+            <UploadFormInput
+              name="Title"
+              inputObj={TITLE}
+              placeholder={'ex. Pizza'}
+            />
+            <UploadFormInput
+              name="Url"
+              inputObj={URL}
+              placeholder={'Put receipt URL here'}
+            />
+            <UploadFormInput
+              name="Image URL"
+              inputObj={IMAGEURL}
+              placeholder={'Put receipt Image URL here'}
+            />
+            <UploadFormInput
+              name="Publisher"
+              inputObj={PUBLISHER}
+              placeholder={'ex. VkusnoItochka'}
+            />
+            <UploadFormInput
+              name="Prep time"
+              inputObj={TIME}
+              placeholder={'55'}
+            />
+            <UploadFormInput
+              name="Servings"
+              inputObj={SERVINGS}
+              placeholder={'4'}
+            />
           </div>
           <div className="flex flex-col m-2">
             <h2 className="text-3xl">Ingridients</h2>
-            <UploadFormInput name="Ingredient 1" inputObj={INGRIDIENT1} />
-            <UploadFormInput name="Ingredient 2" inputObj={INGRIDIENT2} />
-            <UploadFormInput name="Ingredient 3" inputObj={INGRIDIENT3} />
-            <UploadFormInput name="Ingredient 4" inputObj={INGRIDIENT4} />
-            <UploadFormInput name="Ingredient 5" inputObj={INGRIDIENT5} />
-            <UploadFormInput name="Ingredient 6" inputObj={INGRIDIENT6} />
+            <UploadFormInput
+              name="Ingredient 1"
+              inputObj={INGRIDIENT1}
+              placeholder={'quantity,unit,description'}
+            />
+            <UploadFormInput
+              name="Ingredient 2"
+              inputObj={INGRIDIENT2}
+              placeholder={'quantity,unit,description'}
+            />
+            <UploadFormInput
+              name="Ingredient 3"
+              inputObj={INGRIDIENT3}
+              placeholder={'quantity,unit,description'}
+            />
+            <UploadFormInput
+              name="Ingredient 4"
+              inputObj={INGRIDIENT4}
+              placeholder={'quantity,unit,description'}
+            />
+            <UploadFormInput
+              name="Ingredient 5"
+              inputObj={INGRIDIENT5}
+              placeholder={'quantity,unit,description'}
+            />
+            <UploadFormInput
+              name="Ingredient 6"
+              inputObj={INGRIDIENT6}
+              placeholder={'quantity,unit,description'}
+            />
           </div>
         </div>
         <button
@@ -113,11 +178,6 @@ function UploadForm({
               method: 'post',
               postdata: postdata,
             });
-            if (data?.postReturn.status === 'success') {
-              console.log('success');
-              URL.value = '';
-              TITLE.value = '';
-            }
           }}
           className="w-40 m-3 h-12 bg-gradient-to-r from-[#FEC89A] to-[#F08080] rounded-full relative pr-5
            text-white flex items-center text-left hover:scale-105 transition duration-300 ease-in-out "

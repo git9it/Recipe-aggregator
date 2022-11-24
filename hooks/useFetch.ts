@@ -61,9 +61,8 @@ function useFetch({ url, method = 'get', postdata = {} }: IUseFetch) {
           });
           const json = await response.json();
           const postReturn = { postReturn: json };
-          console.log(cache.current, postReturn);
+
           setData(() => ({
-            ...cache.current,
             ...postReturn,
           }));
         } catch (error) {
