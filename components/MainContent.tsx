@@ -169,6 +169,7 @@ function MainContent({ isLoading, data, status, setStatus }: IMainContent) {
               <div className="flex justify-center rounded-br-md">
                 <a
                   href={currentRecipe.source_url}
+                  target="_blank"
                   className="flex w-[9rem] h-10 bg-gradient-to-r from-[#FEC89A] to-[#F08080] rounded-full justify-center items-center my-10 hover:scale-105 transition duration-300 ease-in-out text-white"
                 >
                   DIRECTIONS

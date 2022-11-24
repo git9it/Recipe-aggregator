@@ -89,7 +89,7 @@ function Header({ setFetchUrl, setStatus, data }: IHeader) {
               BOOKMARKS
             </button>
             <div
-              className="hidden absolute z-10 -left-[75px]  peer-hover:flex hover:flex
+              className="hidden absolute z-10 -left-[45px]  peer-hover:flex hover:flex
          w-[250px]
          flex-col bg-white drop-shadow-lg"
             >
