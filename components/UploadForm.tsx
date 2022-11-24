@@ -3,12 +3,28 @@ import { AiOutlineCloseCircle } from 'react-icons/ai';
 import useInput from '../hooks/useInput';
 import UploadFormInput from '../elements/UploadFormInput';
 
+interface IFetchUrl {
+  url: string;
+  method: 'post';
+  postdata: object;
+}
+interface IPostReturn {
+  postReturn: { status: string };
+}
+
+interface IUploadForm {
+  setIsUploadPopupOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  isUploadPopupOpen: boolean;
+  setFetchUrl: React.Dispatch<React.SetStateAction<IFetchUrl>>;
+  data: IPostReturn;
+}
+
 function UploadForm({
   setIsUploadPopupOpen,
   isUploadPopupOpen,
   setFetchUrl,
   data,
-}) {
+}: IUploadForm) {
   const TITLE = useInput('', { isEmpty: true, minLength: 3 });
   const URL = useInput('', { isEmpty: true, isUrl: true });
   const IMAGEURL = useInput('', { isEmpty: true, isUrl: true });

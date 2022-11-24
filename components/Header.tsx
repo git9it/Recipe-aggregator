@@ -12,11 +12,14 @@ enum AppStatus {
   search,
   results,
 }
+interface IPostReturn {
+  postReturn: { status: string };
+}
 
 interface IHeader {
   setStatus: React.Dispatch<React.SetStateAction<AppStatus>>;
   setFetchUrl: React.Dispatch<React.SetStateAction<object>>;
-  data: {};
+  data: IPostReturn;
 }
 
 function Header({ setFetchUrl, setStatus, data }: IHeader) {

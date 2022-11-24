@@ -9,7 +9,7 @@ interface IUseFetch {
 function useFetch({ url, method = 'get', postdata = {} }: IUseFetch) {
   const [isLoading, setLoading] = useState(false);
   const [data, setData] = useState<object | null>(null);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<object | null>(null);
 
   const cache: ICache = useRef({ allRecipes: {}, currentRecipe: {} });
 
@@ -45,7 +45,7 @@ function useFetch({ url, method = 'get', postdata = {} }: IUseFetch) {
             }));
           }
         } catch (error) {
-          setError(error);
+          if (typeof error === 'object' && error !== null) setError(error);
         }
 
         setLoading(false);
@@ -67,7 +67,7 @@ function useFetch({ url, method = 'get', postdata = {} }: IUseFetch) {
             ...postReturn,
           }));
         } catch (error) {
-          setError(error);
+          if (typeof error === 'object' && error !== null) setError(error);
         }
         setLoading(false);
       }

@@ -1,6 +1,15 @@
 import { useState, useEffect } from 'react';
 
-const useValidation = (value, validations) => {
+interface IValidations {
+  isDirty?: boolean;
+  isEmpty?: boolean;
+  minLength?: number;
+  maxLength?: number;
+  isUrl?: boolean;
+  isIngridients?: boolean;
+}
+
+const useValidation = (value: string, validations: IValidations) => {
   const [isEmpty, setEmpty] = useState(false);
   const [minLengthError, setMinLengthError] = useState(false);
   const [maxLengthError, setMaxLengthError] = useState(false);
@@ -11,14 +20,21 @@ const useValidation = (value, validations) => {
     for (const validation in validations) {
       switch (validation) {
         case 'minLength':
-          value.length < validations[validation]
-            ? setMinLengthError(true)
-            : setMinLengthError(false);
+          const minLengthValidationValue = validations[validation];
+          if (minLengthValidationValue) {
+            value.length < minLengthValidationValue
+              ? setMinLengthError(true)
+              : setMinLengthError(false);
+          }
+
           break;
         case 'maxLength':
-          value.length > validations[validation]
-            ? setMaxLengthError(true)
-            : setMaxLengthError(false);
+          const maxLengthValidationValue = validations[validation];
+          if (maxLengthValidationValue) {
+            value.length < maxLengthValidationValue
+              ? setMaxLengthError(true)
+              : setMaxLengthError(false);
+          }
           break;
         case 'isEmpty':
           value ? setEmpty(false) : setEmpty(true);
