@@ -16,10 +16,16 @@ interface IPostReturn {
   postReturn: { status: string };
 }
 
+interface IFetchUrl {
+  url: string;
+  method: string;
+  postdata: object;
+}
+
 interface IHeader {
   setStatus: React.Dispatch<React.SetStateAction<AppStatus>>;
-  setFetchUrl: React.Dispatch<React.SetStateAction<object>>;
-  data: IPostReturn;
+  setFetchUrl: React.Dispatch<React.SetStateAction<IFetchUrl>>;
+  data: IPostReturn | null;
 }
 
 function Header({ setFetchUrl, setStatus, data }: IHeader) {
@@ -31,6 +37,8 @@ function Header({ setFetchUrl, setStatus, data }: IHeader) {
 
     setFetchUrl({
       url: `https://forkify-api.herokuapp.com/api/v2/recipes?search=${inputData}&key=99187270-7ef2-40f7-9b20-cb31a126fbad`,
+      method: 'get',
+      postdata: {},
     });
     setStatus(AppStatus.search);
   }

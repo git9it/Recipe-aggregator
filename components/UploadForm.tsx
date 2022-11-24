@@ -5,7 +5,7 @@ import UploadFormInput from '../elements/UploadFormInput';
 
 interface IFetchUrl {
   url: string;
-  method: 'post';
+  method: string;
   postdata: object;
 }
 interface IPostReturn {
@@ -16,7 +16,7 @@ interface IUploadForm {
   setIsUploadPopupOpen: React.Dispatch<React.SetStateAction<boolean>>;
   isUploadPopupOpen: boolean;
   setFetchUrl: React.Dispatch<React.SetStateAction<IFetchUrl>>;
-  data: IPostReturn;
+  data: IPostReturn | null;
 }
 
 function UploadForm({

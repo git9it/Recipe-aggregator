@@ -21,7 +21,7 @@ function useFetch({ url, method = 'get', postdata = {} }: IUseFetch) {
   }
 
   useEffect(() => {
-    if (!url) return;
+    if (!url || url === '') return;
 
     async function fetchData() {
       setLoading(true);
@@ -76,7 +76,7 @@ function useFetch({ url, method = 'get', postdata = {} }: IUseFetch) {
     fetchData();
   }, [url]);
 
-  return { isLoading, data, error };
+  return { isLoading, data };
 }
 
 export default useFetch;

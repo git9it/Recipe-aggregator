@@ -7,6 +7,11 @@ enum AppStatus {
   search,
   results,
 }
+interface IFetchUrl {
+  url: string;
+  method: string;
+  postdata: object;
+}
 export interface AllRecipes {
   allRecipes: Recipes;
 }
@@ -29,7 +34,7 @@ interface IleftSidebar {
   data: AllRecipes | null;
   status: AppStatus;
   setStatus: React.Dispatch<React.SetStateAction<AppStatus>>;
-  setFetchUrl: React.Dispatch<React.SetStateAction<object>>;
+  setFetchUrl: React.Dispatch<React.SetStateAction<IFetchUrl>>;
 }
 
 function LeftSidebar({
@@ -66,6 +71,8 @@ function LeftSidebar({
               onClick={() => {
                 setFetchUrl({
                   url: `https://forkify-api.herokuapp.com/api/v2/recipes/${post.id}?key=99187270-7ef2-40f7-9b20-cb31a126fbad`,
+                  method: 'get',
+                  postdata: {},
                 });
                 setStatus(AppStatus.results);
               }}

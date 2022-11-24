@@ -6,6 +6,50 @@ import MainContent from '../components/MainContent';
 import { useState } from 'react';
 import useFetch from '../hooks/useFetch';
 
+interface IUseFetchData {
+  data: IData | null;
+  isLoading: boolean;
+}
+
+interface IData {
+  postReturn: { status: string };
+  allRecipes: Recipes;
+  currentRecipe: FetchedRecipeData;
+}
+
+export interface Recipes {
+  status: string;
+  results: number;
+  data: { recipes?: RecipesEntity[] | null };
+}
+
+export interface RecipesEntity {
+  publisher: string;
+  title: string;
+  id: string;
+  image_url: string;
+}
+export interface FetchedRecipeData {
+  status: string;
+  data: { recipe: Recipe };
+}
+
+export interface Recipe {
+  publisher: string;
+  ingredients?: IngredientsEntity[] | null;
+  source_url: string;
+  image_url: string;
+  title: string;
+  servings: number;
+  cooking_time: number;
+  id: string;
+}
+export interface IngredientsEntity {
+  quantity?: number | null;
+  unit: string;
+  description: string;
+}
+
 export default function Home() {
   enum AppStatus {
     start,
@@ -13,9 +57,13 @@ export default function Home() {
     results,
   }
 
-  const [fetchUrl, setFetchUrl] = useState('');
+  const [fetchUrl, setFetchUrl] = useState({
+    url: '',
+    method: 'get',
+    postdata: {},
+  });
   const [status, setStatus] = useState(AppStatus.start);
-  const { data, isLoading, error } = useFetch(fetchUrl);
+  const { data, isLoading }: any = useFetch(fetchUrl);
 
   return (
     <>
