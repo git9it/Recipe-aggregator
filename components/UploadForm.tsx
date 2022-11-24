@@ -69,7 +69,7 @@ function UploadForm({
     cooking_time: TIME.value,
   };
 
-  if (data?.postReturn.status === 'success') {
+  if (data?.postReturn?.status === 'success') {
     console.log('success');
     PUBLISHER.value = '';
     URL.value = '';
