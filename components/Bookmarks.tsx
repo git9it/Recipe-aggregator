@@ -10,7 +10,7 @@ function Bookmarks({}): JSX.Element | null {
         continue;
       }
       let bookmark;
-      if (key.startsWith('5ed6604691c37cdc054b')) {
+      if (key !== 'ally-supports-cache') {
         const item = localStorage.getItem(key);
         if (item !== null) bookmark = JSON.parse(item);
         recipesArr.push(bookmark);
