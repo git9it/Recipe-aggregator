@@ -1,9 +1,33 @@
 import { useEffect, useState } from 'react';
 
-function Bookmarks({}): JSX.Element | null {
+enum AppStatus {
+  start,
+  search,
+  results,
+}
+
+interface IFetchUrl {
+  url: string;
+  method: string;
+  postdata: object;
+}
+
+interface IBookmarks {
+  setStatus: React.Dispatch<React.SetStateAction<AppStatus>>;
+  setFetchUrl: React.Dispatch<React.SetStateAction<IFetchUrl>>;
+}
+
+function Bookmarks({ setFetchUrl, setStatus }: IBookmarks): JSX.Element | null {
   const [isSSR, setIsSSR] = useState(false);
   useEffect(() => setIsSSR(true), []);
   let recipesArr = [];
+
+  enum AppStatus {
+    start,
+    search,
+    results,
+  }
+
   if (isSSR && localStorage.length > 0)
     for (let key in localStorage) {
       if (!localStorage.hasOwnProperty(key)) {
@@ -22,7 +46,14 @@ function Bookmarks({}): JSX.Element | null {
         {recipesArr.map((post) => (
           <>
             <div
-              onClick={() => {}}
+              onClick={() => {
+                setFetchUrl({
+                  url: `https://forkify-api.herokuapp.com/api/v2/recipes/${post.id}?key=99187270-7ef2-40f7-9b20-cb31a126fbad`,
+                  method: 'get',
+                  postdata: {},
+                });
+                setStatus(AppStatus.results);
+              }}
               className="flex items-center mt-1 max-h-13 hover:bg-[#FAE1DD] cursor-pointer"
             >
               <img

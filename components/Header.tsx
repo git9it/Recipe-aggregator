@@ -93,7 +93,7 @@ function Header({ setFetchUrl, setStatus, data }: IHeader) {
          w-[250px]
          flex-col bg-white drop-shadow-lg"
             >
-              <Bookmarks />
+              <Bookmarks setStatus={setStatus} setFetchUrl={setFetchUrl} />
             </div>
           </div>
         </ul>

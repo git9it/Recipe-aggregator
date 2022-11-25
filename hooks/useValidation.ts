@@ -15,7 +15,7 @@ const useValidation = (value: string, validations: IValidations) => {
   const [maxLengthError, setMaxLengthError] = useState(false);
   const [urlError, setUrlError] = useState(false);
   const [ingridientsError, setIngridientsError] = useState(false);
-
+  const [inputValid, setInputValid] = useState(false);
   useEffect(() => {
     for (const validation in validations) {
       switch (validation) {
@@ -55,12 +55,28 @@ const useValidation = (value: string, validations: IValidations) => {
       }
     }
   }, [value]);
+
+  useEffect(() => {
+    if (
+      isEmpty ||
+      maxLengthError ||
+      minLengthError ||
+      urlError ||
+      ingridientsError
+    ) {
+      setInputValid(false);
+    } else {
+      setInputValid(true);
+    }
+  }, [isEmpty, minLengthError, maxLengthError, urlError, ingridientsError]);
+
   return {
     isEmpty,
     minLengthError,
     maxLengthError,
     urlError,
     ingridientsError,
+    inputValid,
   };
 };
 

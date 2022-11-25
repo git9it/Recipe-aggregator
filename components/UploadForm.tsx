@@ -2,12 +2,8 @@ import { FiUploadCloud } from 'react-icons/fi';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 import useInput from '../hooks/useInput';
 import UploadFormInput from '../elements/UploadFormInput';
+import { IFetchUrl } from './types';
 
-interface IFetchUrl {
-  url: string;
-  method: string;
-  postdata: object;
-}
 interface IPostReturn {
   postReturn: { status: string };
 }
@@ -172,6 +168,14 @@ function UploadForm({
           </div>
         </div>
         <button
+          disabled={
+            !TITLE.inputValid ||
+            !URL.inputValid ||
+            !IMAGEURL.inputValid ||
+            !PUBLISHER.inputValid ||
+            !TIME.inputValid ||
+            !SERVINGS.inputValid
+          }
           onClick={() => {
             setFetchUrl({
               url: 'https://forkify-api.herokuapp.com/api/v2/recipes?key=99187270-7ef2-40f7-9b20-cb31a126fbad',
@@ -180,7 +184,7 @@ function UploadForm({
             });
           }}
           className="w-40 m-3 h-12 bg-gradient-to-r from-[#FEC89A] to-[#F08080] rounded-full relative pr-5
-           text-white flex items-center text-left hover:scale-105 transition duration-300 ease-in-out "
+           text-white flex items-center text-left hover:scale-105 transition duration-300 ease-in-out disabled:scale-100 disabled:opacity-50 disabled:cursor-default"
         >
           <FiUploadCloud className="w-5 h-5 mx-2 ml-7" />
           UPLOAD
