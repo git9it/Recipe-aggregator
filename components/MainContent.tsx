@@ -7,46 +7,10 @@ import { AiOutlineMinusCircle } from 'react-icons/ai';
 import { BiRightArrowAlt } from 'react-icons/bi';
 import { RiCheckFill } from 'react-icons/ri';
 import { FaArrowUp } from 'react-icons/fa';
-
+import {IMainContent, AppStatus, Recipe} from './types'
 import Loader from './Loader';
 
-enum AppStatus {
-  start,
-  search,
-  results,
-}
 
-export interface currentRecipe {
-  currentRecipe: FetchedRecipeData;
-}
-
-export interface FetchedRecipeData {
-  status: string;
-  data: { recipe: Recipe };
-}
-
-export interface Recipe {
-  publisher: string;
-  ingredients?: IngredientsEntity[] | null;
-  source_url: string;
-  image_url: string;
-  title: string;
-  servings: number;
-  cooking_time: number;
-  id: string;
-}
-export interface IngredientsEntity {
-  quantity?: number | null;
-  unit: string;
-  description: string;
-}
-
-interface IMainContent {
-  isLoading: boolean;
-  data: currentRecipe | null;
-  status: AppStatus;
-  setStatus: React.Dispatch<React.SetStateAction<AppStatus>>;
-}
 
 function MainContent({ isLoading, data, status, setStatus }: IMainContent) {
   const [currentServings, setCurrentServings] = useState(4);

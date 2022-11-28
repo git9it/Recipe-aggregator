@@ -1,32 +1,10 @@
 import { useEffect, useState } from 'react';
-
-enum AppStatus {
-  start,
-  search,
-  results,
-}
-
-interface IFetchUrl {
-  url: string;
-  method: string;
-  postdata: object;
-}
-
-interface IBookmarks {
-  setStatus: React.Dispatch<React.SetStateAction<AppStatus>>;
-  setFetchUrl: React.Dispatch<React.SetStateAction<IFetchUrl>>;
-}
+import { IBookmarks, AppStatus } from './types';
 
 function Bookmarks({ setFetchUrl, setStatus }: IBookmarks): JSX.Element | null {
   const [isSSR, setIsSSR] = useState(false);
   useEffect(() => setIsSSR(true), []);
   let recipesArr = [];
-
-  enum AppStatus {
-    start,
-    search,
-    results,
-  }
 
   if (isSSR && localStorage.length > 0)
     for (let key in localStorage) {

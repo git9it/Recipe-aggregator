@@ -4,29 +4,11 @@ import { RiSearchLine } from 'react-icons/ri';
 import { AiOutlineFileAdd } from 'react-icons/ai';
 import { BsBookmarkStar } from 'react-icons/bs';
 import { useState } from 'react';
+import { IHeader, AppStatus } from './types';
 import Bookmarks from './Bookmarks';
 import UploadForm from './UploadForm';
 
-enum AppStatus {
-  start,
-  search,
-  results,
-}
-interface IPostReturn {
-  postReturn: { status: string };
-}
 
-interface IFetchUrl {
-  url: string;
-  method: string;
-  postdata: object;
-}
-
-interface IHeader {
-  setStatus: React.Dispatch<React.SetStateAction<AppStatus>>;
-  setFetchUrl: React.Dispatch<React.SetStateAction<IFetchUrl>>;
-  data: IPostReturn | null;
-}
 
 function Header({ setFetchUrl, setStatus, data }: IHeader) {
   const [inputData, setInputData] = useState('');

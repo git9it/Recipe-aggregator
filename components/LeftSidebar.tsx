@@ -1,41 +1,10 @@
 import { useState } from 'react';
 import { BiLeftArrowAlt, BiRightArrowAlt } from 'react-icons/bi';
+import { IleftSidebar, AppStatus, RecipesEntity } from './types';
 import Loader from './Loader';
 
-enum AppStatus {
-  start,
-  search,
-  results,
-}
-interface IFetchUrl {
-  url: string;
-  method: string;
-  postdata: object;
-}
-export interface AllRecipes {
-  allRecipes: Recipes;
-}
 
-export interface Recipes {
-  status: string;
-  results: number;
-  data: { recipes?: RecipesEntity[] | null };
-}
 
-export interface RecipesEntity {
-  publisher: string;
-  title: string;
-  id: string;
-  image_url: string;
-}
-
-interface IleftSidebar {
-  isLoading: boolean;
-  data: AllRecipes | null;
-  status: AppStatus;
-  setStatus: React.Dispatch<React.SetStateAction<AppStatus>>;
-  setFetchUrl: React.Dispatch<React.SetStateAction<IFetchUrl>>;
-}
 
 function LeftSidebar({
   isLoading,

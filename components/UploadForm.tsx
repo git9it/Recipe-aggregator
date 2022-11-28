@@ -2,18 +2,8 @@ import { FiUploadCloud } from 'react-icons/fi';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 import useInput from '../hooks/useInput';
 import UploadFormInput from '../elements/UploadFormInput';
-import { IFetchUrl } from './types';
-
-interface IPostReturn {
-  postReturn: { status: string };
-}
-
-interface IUploadForm {
-  setIsUploadPopupOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  isUploadPopupOpen: boolean;
-  setFetchUrl: React.Dispatch<React.SetStateAction<IFetchUrl>>;
-  data: IPostReturn | null;
-}
+import { useEffect } from 'react';
+import { IUploadForm } from './types';
 
 function UploadForm({
   setIsUploadPopupOpen,
@@ -65,21 +55,25 @@ function UploadForm({
     cooking_time: TIME.value,
   };
 
-  if (data?.postReturn?.status === 'success') {
-    console.log('success');
-    PUBLISHER.value = '';
-    URL.value = '';
-    IMAGEURL.value = '';
-    TITLE.value = '';
-    SERVINGS.value = '';
-    TIME.value = '';
-    INGRIDIENT1.value = '';
-    INGRIDIENT2.value = '';
-    INGRIDIENT3.value = '';
-    INGRIDIENT4.value = '';
-    INGRIDIENT5.value = '';
-    INGRIDIENT6.value = '';
-  }
+
+         if (data?.postReturn?.status === 'success') {
+                  console.log('success');
+                  PUBLISHER.value = '';
+                  URL.value = '';
+                  IMAGEURL.value = '';
+                  TITLE.value = '';
+                  SERVINGS.value = '';
+                  TIME.value = '';
+                  INGRIDIENT1.value = '';
+                  INGRIDIENT2.value = '';
+                  INGRIDIENT3.value = '';
+                  INGRIDIENT4.value = '';
+                  INGRIDIENT5.value = '';
+                  INGRIDIENT6.value = '';
+         }
+
+
+ 
 
   return (
     <div className="relative">

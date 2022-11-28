@@ -31,6 +31,7 @@ function useFetch({ url, method = 'get', postdata = {} }: IUseFetch) {
           const json = await response.json();
 
           if (json.results) {
+
             cache.current['allRecipes'] = json;
             const recipesData = { allRecipes: json };
             setData(() => ({
