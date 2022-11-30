@@ -1,7 +1,28 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# ![Eatty](https://raw.githubusercontent.com/git9it/Recipe-aggregator/main/images/demo/Screenshot.png)
+# Eatty - receipt aggregator
+<table>
+<tr>
+<td>
+  
+  A web app helps to find receipt by dish name or ingredient. Fast and easy to use. Just type in search bar what you want to cook and you will get the best receipts :)
+</td>
+</tr>
+</table>
 
-## Getting Started
 
+## Demo
+Here is a working live demo :  https://recipe-aggregator.vercel.app/
+
+## Install
+```bash
+git clone https://github.com/git9it/Recipe-aggregator.git recipe-aggregator
+cd recipe-aggregator
+git checkout recipe-aggregator
+npm install
+```
+
+---
+## Run
 First, run the development server:
 
 ```bash
@@ -12,23 +33,39 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+### Development
+Want to contribute? Great!
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+To fix a bug or enhance an existing module, follow these steps:
 
-## Learn More
+- Fork the repo
+- Create a new branch (`git checkout -b improve-feature`)
+- Make the appropriate changes in the files
+- Add changes to reflect the changes made
+- Commit your changes (`git commit -am 'Improve feature'`)
+- Push to the branch (`git push origin improve-feature`)
+- Create a Pull Request 
 
-To learn more about Next.js, take a look at the following resources:
+### Bug / Feature Request
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+If you find a bug (the website couldn't handle the query and / or gave undesired results), kindly open an issue [here](https://github.com/git9it/Recipe-aggregator/issues/new) by including your search query and the expected result.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+If you'd like to request a new function, feel free to do so by opening an issue [here](https://github.com/git9it/Recipe-aggregator/issues/new). Please include sample queries and their corresponding results.
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Built with 
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- [Next.js](https://nextjs.org/) - Next.js gives you the best developer experience with all the features you need for production: hybrid static & server rendering, TypeScript support, smart bundling, route pre-fetching, and more. No config needed.
+- [Typescript](https://www.typescriptlang.org/) - TypeScript is JavaScript with syntax for types. TypeScript is a strongly typed programming language that builds on JavaScript, giving you better tooling at any scale.
+- [Tailwind](https://tailwindcss.com/) - Tailwind CSS is self-described as a utility first CSS framework. Rather than focusing on the functionality of the item being styled, Tailwind is centered around how it should be displayed. This makes it easier for the developer to test out new styles and change the layout.
+
+
+## To-do
+- Find way to improve useFetch hook
+- Rid off typescript mess
+- Add comments and make code clear
+- Mobile version(?)
+
+
+
