@@ -1,20 +1,18 @@
-import { useState, useReducer } from 'react';
-import { BsBookmarkStar, BsBookmarkStarFill } from 'react-icons/bs';
-import { BiTimeFive } from 'react-icons/bi';
-import { MdOutlinePeopleAlt } from 'react-icons/md';
-import { AiOutlinePlusCircle } from 'react-icons/ai';
-import { AiOutlineMinusCircle } from 'react-icons/ai';
-import { BiRightArrowAlt } from 'react-icons/bi';
-import { RiCheckFill } from 'react-icons/ri';
-import { FaArrowUp } from 'react-icons/fa';
-import {IMainContent, AppStatus, Recipe} from './types'
-import Loader from './Loader';
-
-
+import { useState, useReducer } from "react";
+import { BsBookmarkStar, BsBookmarkStarFill } from "react-icons/bs";
+import { BiTimeFive } from "react-icons/bi";
+import { MdOutlinePeopleAlt } from "react-icons/md";
+import { AiOutlinePlusCircle } from "react-icons/ai";
+import { AiOutlineMinusCircle } from "react-icons/ai";
+import { BiRightArrowAlt } from "react-icons/bi";
+import { RiCheckFill } from "react-icons/ri";
+import { FaArrowUp } from "react-icons/fa";
+import { IMainContent, AppStatus, Recipe } from "./types";
+import Loader from "./Loader";
 
 function MainContent({ isLoading, data, status, setStatus }: IMainContent) {
   const [currentServings, setCurrentServings] = useState(4);
-  const [_, forceUpdate] = useReducer((x) => x + 1, 0);
+  const [_, forceUpdate] = useReducer(x => x + 1, 0);
 
   let currentRecipe: Recipe | null | undefined;
   if (data?.currentRecipe && AppStatus.results) {
@@ -23,15 +21,9 @@ function MainContent({ isLoading, data, status, setStatus }: IMainContent) {
     currentRecipe = data.currentRecipe.data.recipe;
   }
 
-  function calcServings(
-    currQuantity: number | null | undefined,
-    newQuantity: number
-  ) {
+  function calcServings(currQuantity: number | null | undefined, newQuantity: number) {
     if (currentRecipe)
-      if (typeof currQuantity === 'number')
-        return ((currQuantity / currentRecipe.servings) * newQuantity).toFixed(
-          1
-        );
+      if (typeof currQuantity === "number") return ((currQuantity / currentRecipe.servings) * newQuantity).toFixed(1);
   }
 
   function addBookmark() {
@@ -57,11 +49,7 @@ function MainContent({ isLoading, data, status, setStatus }: IMainContent) {
           <>
             {}
             <div>
-              <img
-                src={currentRecipe.image_url}
-                alt=""
-                className="h-[20rem] w-full object-cover"
-              />
+              <img src={currentRecipe.image_url} alt="" className="h-[20rem] w-full object-cover" />
             </div>
 
             <div className="flex justify-center">
@@ -83,10 +71,10 @@ function MainContent({ isLoading, data, status, setStatus }: IMainContent) {
                   <MdOutlinePeopleAlt className="h-6 w-6 fill-[#F08080] mr-2" />
                   {currentServings} SERVINGS
                 </li>
-                <button onClick={() => setCurrentServings((prev) => prev - 1)}>
+                <button onClick={() => setCurrentServings(prev => prev - 1)}>
                   <AiOutlineMinusCircle className="h-5 w-5 fill-[#F08080] ml-2 hover:scale-110 transition duration-300 ease-in-out cursor-pointer" />
                 </button>
-                <button onClick={() => setCurrentServings((prev) => prev + 1)}>
+                <button onClick={() => setCurrentServings(prev => prev + 1)}>
                   <AiOutlinePlusCircle className="h-5 w-5 fill-[#F08080] ml-1 hover:scale-110 transition duration-300 ease-in-out cursor-pointer" />
                 </button>
               </ul>
@@ -116,8 +104,7 @@ function MainContent({ isLoading, data, status, setStatus }: IMainContent) {
                     return (
                       <li className="flex ml-3" key={index}>
                         <RiCheckFill className=" fill-[#F08080] w-6 h-6 shrink-0" />
-                        {calcServings(ingridient.quantity, currentServings)}{' '}
-                        {ingridient.unit} {ingridient.description}
+                        {calcServings(ingridient.quantity, currentServings)} {ingridient.unit} {ingridient.description}
                       </li>
                     );
                   })}
@@ -128,9 +115,8 @@ function MainContent({ isLoading, data, status, setStatus }: IMainContent) {
                 HOW TO COOK IT
               </h3>
               <p className="mx-5">
-                This recipe was carefully designed and tested by{' '}
-                {currentRecipe.publisher.toUpperCase()}. Please check out
-                directions at their website.
+                This recipe was carefully designed and tested by {currentRecipe.publisher.toUpperCase()}. Please check
+                out directions at their website.
               </p>
               <div className="flex justify-center rounded-br-md">
                 <a
