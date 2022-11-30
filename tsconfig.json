@@ -16,6 +16,6 @@
     "incremental": true,
     "declaration": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".d.ts", "components/types.d.ts"],
   "exclude": ["node_modules"]
 }
